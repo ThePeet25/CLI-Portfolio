@@ -7,7 +7,7 @@ import GuiBox from "./components/GuiBox";
 
 type ActiveBox = {
   id: number;
-  type: "introduce" | "project" | "contact" | "certificate" | "help" | "skills";
+  type: "introduce" | "project" | "contact" | "certificate" | "skills";
   title: string;
 };
 
@@ -46,9 +46,6 @@ export default function Home() {
         break;
       case "certificate":
         targetType = "certificate";
-        break;
-      case "help":
-        targetType = "help";
         break;
       case "skills":
         targetType = "skills";

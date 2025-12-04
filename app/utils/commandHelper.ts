@@ -1,5 +1,3 @@
-// app/utils/commandHelper.ts
-
 type CommandResponse = {
   type: "text" | "link" | "error";
   value: string;
