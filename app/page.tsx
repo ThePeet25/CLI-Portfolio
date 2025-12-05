@@ -133,7 +133,6 @@ export default function Home() {
       </div>
 
       {/* 3. global floating */}
-      {/* <div className="flex"> */}
       <button
         onClick={scrollToTop}
         className={`fixed bottom-20 right-20 bg-green-500 z-50 hover:bg-green-500 

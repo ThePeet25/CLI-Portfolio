@@ -23,6 +23,9 @@ import {
   SiCplusplus,
 } from "react-icons/si";
 
+import { FaPhone, FaLine } from "react-icons/fa6";
+import { MdEmail, MdMail } from "react-icons/md";
+
 type GuiBoxProps = {
   id: number;
   title: string;
@@ -210,6 +213,101 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
           </div>
         );
 
+      case "contact":
+        return (
+          // <div className="gird grid-cols-2 md:grid-cols-4 w-full text-gray-400">
+          //   {/* <div className="group border border-transparent hover:border-white hover:bg-white/10 p-2 hover:text-green-400 rounded-xl flex flex-col items-center gap-2 transition-all duration-300">
+          //     <FaPhone size={30} className="group-hover:text-blue-500" />
+          //     <p>+66 99 132 7031</p>
+          //   </div> */}
+          //   <a
+          //     href=""
+          //     className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl
+          //   flex flex-col items-center gap-3 transition-all duration-300"
+          //   >
+          //     <FaPhone
+          //       size={30}
+          //       className="group-hover:text-green-400 group-hover:scale-110 transition-transform duration-300"
+          //     />
+          //     <p className="font-mono text-sm group-hover:text-white transition-colors">
+          //       +66 99 132 7031
+          //     </p>
+          //   </a>
+          //   <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
+          //     <FaLine
+          //       size={30}
+          //       className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
+          //     />
+          //     <p className="font-mono text-sm group-hover:text-white transition-colors">
+          //       0991327031
+          //     </p>
+          //   </div>
+          //   <div>
+          //     <SiGithub />
+          //     <p>github</p>
+          //   </div>
+          //   <div>
+          //     <MdMail />
+          //     <p>email</p>
+          //   </div>
+          // </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full text-gray-400 place-items-center h-full">
+            {/* 1. Phone (แถม: กดโทรได้เลย) */}
+            <a
+              href="tel:+66991327031"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+            >
+              <FaPhone
+                size={30}
+                className="group-hover:text-green-400 group-hover:scale-110 transition-transform duration-300"
+              />
+              <p className="font-mono text-sm group-hover:text-white transition-colors">
+                099-132-7031
+              </p>
+            </a>
+
+            {/* 2. Line */}
+            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
+              <FaLine
+                size={30}
+                className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
+              />
+              <p className="font-mono text-sm group-hover:text-white transition-colors">
+                0991327031
+              </p>
+            </div>
+
+            <a
+              href="https://github.com/ThePeet25"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+            >
+              <SiGithub
+                size={30}
+                className="group-hover:text-white group-hover:scale-110 transition-transform duration-300"
+              />
+              <p className="font-mono text-sm group-hover:text-white transition-colors">
+                ThePeet25
+              </p>
+            </a>
+
+            {/* 4. Email */}
+            <a
+              href="mailto:b.pattaradanai22@gmail.com"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+            >
+              <MdEmail
+                size={30}
+                className="group-hover:text-red-400 group-hover:scale-110 transition-transform duration-300"
+              />
+              <p className="font-mono text-sm group-hover:text-white transition-colors">
+                b.pattaradanai22@gmail.com
+              </p>
+            </a>
+          </div>
+        );
+
       default:
         return <p>No content</p>;
     }
@@ -278,7 +376,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
         {/* Content Area */}
         {isExpanded && (
           <div className="p-4 bg-[#1e1e1e]">
-            <div className="bg-[#2a2e37] rounded p-6 shadow-inner min-h-[200px] border border-gray-700/50">
+            <div className="bg-[#2a2e37] rounded p-6 shadow-inner min-h-[200px] border border-gray-700/50 flex flex-col justify-center">
               {renderContent()}
             </div>
           </div>
