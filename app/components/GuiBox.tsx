@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ProjectModal from "./ProjectModal";
 import {
   SiNodedotjs,
   SiExpress,
@@ -21,10 +22,25 @@ import {
   SiTypescript,
   SiPython,
   SiCplusplus,
+  SiArduino,
+  SiEspressif,
 } from "react-icons/si";
+
+import {
+  FiGithub,
+  FiExternalLink,
+  FiArrowLeft,
+  FiCalendar,
+  FiCpu,
+  FiCheckCircle,
+  FiFolder,
+} from "react-icons/fi";
 
 import { FaPhone, FaLine } from "react-icons/fa6";
 import { MdEmail, MdMail } from "react-icons/md";
+import { Subtitles } from "lucide-react";
+import { describe } from "node:test";
+import { title } from "process";
 
 type GuiBoxProps = {
   id: number;
@@ -73,10 +89,120 @@ const skillCategories = [
       { name: "C++", icon: SiCplusplus, color: "text-[#00599C]" },
     ],
   },
+  {
+    title: "IoT & Embedded Systems",
+    skills: [
+      { name: "Arduino", icon: SiArduino, color: "text-[#00979D]" },
+      { name: "ESP32 & ESP8266", icon: SiEspressif, color: "text-[#E7352C]" },
+    ],
+  },
+];
+
+const projects = [
+  {
+    title: "POS System Backend",
+    subtitles: `Group project | July 2025 - October 2025 `,
+    date: "July 2025 - October 2025",
+    role: "Backend Developer",
+    github: "https://github.com/ThePeet25/POS-server",
+    describe:
+      "This project is a backend Node.js server for a Point of Sale (POS) system, built using Express.js and PostgreSQL. It provides a full retail management API, including user authentication, product management, inventory tracking, promotions, and order processing. Prisma is used as the ORM for efficient database operations, while JWT and bcryptjs handle secure authentication and password hashing.",
+    describeFull:
+      "This is a backend Node.js server for a Point of Sale (POS) system built with Express.js and PostgreSQL. The project implements a complete e-commerce/retail management API with user authentication, product management, inventory tracking, promotions, and order processing. It uses Prisma as the ORM for database interactions and JWT for secure authentication, with bcryptjs for password hashing.",
+    techStack: [
+      "Javascript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma ORM",
+      "Docker",
+    ],
+    responsibilities: [
+      "Developed RESTful APIs for product management, order processing, and user authentication.",
+      "Designed and implemented a PostgreSQL database schema for efficient data storage and retrieval.",
+      "Implemented JWT authentication with RBAC, supporting two access levels: Cashier and Manager",
+      "Integrated Prisma ORM for type-safe database queries and migrations.",
+      "Created backend docker images for easy deployment and scalability.",
+    ],
+  },
+  {
+    title: "Search & Review Restaurant",
+    subtitles: `Group project | July 2025 - October 2025 `,
+    date: "July 2025 - October 2025",
+    role: "Backend Developer",
+    github: "https://github.com/KMITL-PCC/TasteTrail",
+    describe: `TasteTrail is a restaurant discovery and review platform built with an Express.js + TypeScript backend. It provides secure authentication (OTP and Google OAuth), restaurant and review management, and efficient data operations through Prisma ORM. The system integrates PostgreSQL for storage, Redis for caching, Cloudinary for media handling, and Nodemailer for OTP delivery, ensuring reliability and high performance.`,
+    describeFull:
+      "TasteTrail is a full-stack web application designed to help users discover, review, and manage restaurants in the KMITL PCC area. The platform features a modern frontend built with Next.js 15, React 19, and Tailwind CSS, offering a responsive and intuitive user experience. Users can browse restaurants, filter results, and interact with location-based maps, while restaurant owners have tools to create and manage their listings. The backend is powered by Express.js with TypeScript and Prisma ORM, providing a robust API for authentication, restaurant management, and review handling. Key features include secure login and registration with OTP and Google OAuth, real-time notifications, and advanced security measures such as CSRF protection and rate limiting. The system integrates PostgreSQL for data storage, Redis for caching, Cloudinary for image uploads, and Nodemailer for email services, ensuring scalability and reliability.",
+    techStack: [
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma ORM",
+      "Docker",
+      "Redis",
+    ],
+    responsibilities: [
+      "Developed RESTful APIs for searching restaurants, filter by categories, reviews, create restaurant profile and user authentication.",
+      "Designed and implemented a PostgreSQL database schema for efficient data storage and retrieval.",
+      "Implemented session authentication with RBAC, supporting two access levels: User and Restaurant Owner",
+      "Integrated Prisma ORM for type-safe database queries and migrations.",
+      "Created docker to run backend, postgreSQL and redis for session store.",
+      "Create unit test with jest to ensure authentication system work as intended.",
+      "Implement protect CSRF attack with csurf middleware.",
+      "Implemented Authentication with Google OAuth2.0 for secure and convenient user login.",
+    ],
+  },
+  {
+    title: "Log process",
+    subtitles: `personal project | February 2025 - March 2025 `,
+    date: "February 2025 - Mar 2025",
+    role: "Backend Developer",
+    github: "https://github.com/ThePeet25/log-process",
+    describe:
+      "This project utilizes Nodejs, Kafka, Elasticsearch, Docker, and Auth0 as the authentication provider. It focuses on log processing to provide real-time insights. When a user logs in or out, the log is sent via Kafka to Elasticsearch. Only administrators have access to view the logs.",
+    describeFull:
+      "This project is a log-processing system built with Node.js, Kafka, Elasticsearch, Auth0, Docker, and EJS. It records user login and logout activities in real time. When a user authenticates through Auth0, the system generates logs and sends them through Kafka, which are then stored and indexed in Elasticsearch. Only administrators—defined via Auth0 roles—can view these logs.",
+    techStack: [
+      "Javascript",
+      "Node.js",
+      "Express.js",
+      "Elasticsearch",
+      "Kafka",
+      "Docker",
+      "EJS",
+    ],
+    responsibilities: [
+      "Developed RESTful APIs for create log when user login and logout with Auth0 authentication.",
+      "Implemented API for search log with Elasticsearch for fast and efficient log retrieval.",
+      "Integrated Kafka for real-time log streaming to Elasticsearch.",
+      "Implemented role-based access control (RBAC) using Auth0 to restrict log viewing to administrators only.",
+      "Created docker images for easy deployment of the log processing system.",
+      "Created EJS templates for admin log viewing interface.",
+    ],
+  },
+  {
+    title: "CLI Portfolio",
+    subtitles: `personal project | December 2025`,
+    date: "December 2025",
+    role: "Frontend developer",
+    github: "https://github.com/ThePeet25/log-process",
+    describe:
+      "This is my CLI with GUI portfolio. It is built with next.js and tailwindcss. The project showcases my skills and experience in a frontend developer.",
+    describeFull:
+      "This is my CLI with GUI portfolio. It's built with next.js and tailwindcss. The project showcases my skills and experience in a frontend developer.",
+    techStack: ["Javascript", "HTML", "Tailwind CSS", "React"],
+    responsibilities: [
+      `Implemented a hybrid portfolio with both a polished GUI (Next.js + React) 
+      and a developer-friendly CLI, sharing a single core library for business logic`,
+    ],
+  },
 ];
 
 function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
   //scroll to box when created
@@ -255,19 +381,19 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
             {/* 1. Phone (แถม: กดโทรได้เลย) */}
             <a
               href="tel:+66991327031"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24"
             >
               <FaPhone
                 size={30}
                 className="group-hover:text-green-400 group-hover:scale-110 transition-transform duration-300"
               />
               <p className="font-mono text-sm group-hover:text-white transition-colors">
-                099-132-7031
+                +66 99-132-7031
               </p>
             </a>
 
             {/* 2. Line */}
-            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
+            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24">
               <FaLine
                 size={30}
                 className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
@@ -281,7 +407,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
               href="https://github.com/ThePeet25"
               target="_blank"
               rel="noopener noreferrer"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24"
             >
               <SiGithub
                 size={30}
@@ -305,6 +431,171 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                 b.pattaradanai22@gmail.com
               </p>
             </a>
+          </div>
+        );
+
+      case "project":
+        return (
+          <div className="min-h-[500px] p-2 relative">
+            {/* not select project */}
+            {!selectedProject && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
+                {projects.map((project, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col justify-between bg-[#161b22] p-2 md:p-6 border border-gray-800 rounded-lg text-gray-400 md:min-h-[400px]"
+                  >
+                    {/* header */}
+                    <div className="flex flex-col justify-between items-start mb-4 gap-2">
+                      <h2 className="text-sm md:text-xl text-white bg-green-400 p-2 rounded-lg">
+                        {project.title}
+                      </h2>
+                      <p className="text-xs">{project.subtitles} </p>
+                    </div>
+
+                    {/* describe */}
+                    <div
+                      onClick={() => setSelectedProject(project)}
+                      className="text-xs md:text-base border border-transparent hover:border-white cursor-pointer"
+                    >
+                      <p>{project.describe}</p>
+                    </div>
+
+                    {/* footer */}
+                    <div className="flex items-center gap-4 mt-auto pt-4 border-t border-gray-800">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-green-400 transition-colors"
+                      >
+                        <SiGithub size={24} className="text-white" />
+                        <span>Github</span>
+                      </a>
+                    </div>
+
+                    {/* {selectedProject && (
+                      <ProjectModal
+                        project={selectedProject}
+                        onClose={() => setSelectedProject(null)}
+                      />
+                    )} */}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* select project */}
+            {selectedProject && (
+              <div className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto">
+                {/* header */}
+                <div className="flex itmes-center gap-4 border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#0d1117]/95 backdrop-blur z-10 p-2">
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="flex items-center gap-2px-2 py-1.5 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors text-sm font-bold"
+                  >
+                    <FiArrowLeft /> Back
+                  </button>
+                  <h2 className="text-xl font-bold text-green-500 tracking-wide">
+                    {selectedProject.title}{" "}
+                  </h2>
+                </div>
+
+                {/* content */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-2">
+                  {/* Left: Main Info */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div>
+                      {/* summary */}
+                      <h4 className="font-bold text-green-400 mb-2">Summary</h4>
+                      <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+                        {selectedProject.describeFull}
+                      </p>
+                    </div>
+
+                    {/* responsibilties */}
+                    <h4 className="text-green-400 font-bold mb-3 flex items-center gap-2">
+                      Responsibilities
+                    </h4>
+                    <ul className="space-y-3">
+                      {selectedProject.responsibilities?.map(
+                        (item: string, idx: number) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-3 text-sm text-gray-300"
+                          >
+                            <FiCheckCircle className="text-green-500 mt-1 shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+
+                  {/* Right: Meta Info & Links */}
+                  <div className="space-y-6">
+                    {/* Info Card */}
+                    <div className="bg-[#161b22] p-5 rounded-lg border border-gray-700">
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-xs text-gray-500 font-bold uppercase mb-1">
+                            Role
+                          </p>
+                          <p className="text-white font-mono text-sm">
+                            {selectedProject.role}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 font-bold uppercase mb-1">
+                            Timeline
+                          </p>
+                          <div className="flex items-center gap-2 text-gray-300 text-sm">
+                            <FiCalendar /> {selectedProject.date}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 font-bold uppercase mb-2">
+                            Tech Stack
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject.techStack.map(
+                              (t: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="px-2 py-1 bg-gray-800 text-green-400 text-xs rounded border border-gray-600"
+                                >
+                                  {t}
+                                </span>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Buttons */}
+                      <div className="mt-6 pt-4 border-t border-gray-700 flex flex-col gap-3">
+                        <a
+                          href={selectedProject.github}
+                          target="_blank"
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded transition-colors text-sm font-bold"
+                        >
+                          <FiGithub /> Github
+                        </a>
+                        {selectedProject.live && (
+                          <a
+                            href={selectedProject.live}
+                            target="_blank"
+                            className="flex items-center justify-center gap-2 w-full py-2 border border-green-600 text-green-500 hover:bg-green-900/20 rounded transition-colors text-sm font-bold"
+                          >
+                            <FiExternalLink /> Live Demo
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
 
@@ -376,7 +667,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
         {/* Content Area */}
         {isExpanded && (
           <div className="p-4 bg-[#1e1e1e]">
-            <div className="bg-[#2a2e37] rounded p-6 shadow-inner min-h-[200px] border border-gray-700/50 flex flex-col justify-center">
+            <div className="bg-[#2a2e37] rounded p-0 md:p-6 shadow-inner min-h-[200px] border border-gray-700/50 flex flex-col justify-center">
               {renderContent()}
             </div>
           </div>
