@@ -7,7 +7,7 @@ import GuiBox from "./components/GuiBox";
 
 type ActiveBox = {
   id: number;
-  type: "introduce" | "project" | "contact" | "certificate" | "skills";
+  type: "introduce" | "projects" | "contact" | "certificate" | "skills";
   title: string;
 };
 
@@ -29,30 +29,20 @@ export default function Home() {
   }, []);
 
   const handleCommand = (cmd: string) => {
-    const cleanCmd = cmd.toLowerCase().replace("/", "");
+    const cleanCmd = cmd.toLowerCase().replace("/", "") as ActiveBox["type"];
+
+    const validTypes: ActiveBox["type"][] = [
+      "introduce",
+      "projects",
+      "contact",
+      "certificate",
+      "skills",
+    ];
 
     //Mapping commands to type
-    let targetType: ActiveBox["type"] | null = null;
-
-    switch (cleanCmd) {
-      case "introduce":
-        targetType = "introduce";
-        break;
-      case "project":
-        targetType = "project";
-        break;
-      case "contact":
-        targetType = "contact";
-        break;
-      case "certificate":
-        targetType = "certificate";
-        break;
-      case "skills":
-        targetType = "skills";
-        break;
-      default:
-        targetType = null;
-    }
+    const targetType: ActiveBox["type"] | null = validTypes.includes(cleanCmd)
+      ? cleanCmd
+      : null;
 
     if (targetType) {
       const existingBox = activeBoxes.find((box) => box.type === targetType);
@@ -78,28 +68,6 @@ export default function Home() {
       }
     }
   };
-
-  // const handleCommand = (cmd: string) => {
-  //   const cleanCmd = cmd.toLowerCase().replace("/", ""); // ตัด / ออก
-
-  //   let newBox: ActiveBox | null = null;
-
-  //   // เช็คคำสั่ง
-  //   if (cleanCmd === "introduce") {
-  //     newBox = { id: Date.now(), type: "introduce", title: "introduce.md" };
-  //   } else if (cleanCmd === "certificate") {
-  //     newBox = {
-  //       id: Date.now(),
-  //       type: "certificate",
-  //       title: "certificate.json",
-  //     };
-  //   }
-
-  //   // ถ้ามีกล่องใหม่ ให้เพิ่มเข้า State
-  //   if (newBox) {
-  //     setActiveBoxes((prev) => [...prev, newBox!]);
-  //   }
-  // };
 
   const removeBox = (id: number) => {
     setActiveBoxes((prev) => prev.filter((box) => box.id !== id));

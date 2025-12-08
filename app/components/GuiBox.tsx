@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import ProjectModal from "./ProjectModal";
 import {
   SiNodedotjs,
   SiExpress,
@@ -34,18 +33,18 @@ import {
   FiCpu,
   FiCheckCircle,
   FiFolder,
+  FiAward,
+  FiX,
+  FiMaximize2,
 } from "react-icons/fi";
 
 import { FaPhone, FaLine } from "react-icons/fa6";
 import { MdEmail, MdMail } from "react-icons/md";
-import { Subtitles } from "lucide-react";
-import { describe } from "node:test";
-import { title } from "process";
 
 type GuiBoxProps = {
   id: number;
   title: string;
-  type: "introduce" | "project" | "contact" | "certificate" | "skills";
+  type: "introduce" | "projects" | "contact" | "certificate" | "skills";
   onDelete: (id: number) => void;
 };
 
@@ -200,9 +199,30 @@ const projects = [
   },
 ];
 
+const certificates = [
+  {
+    id: 1,
+    title: "KLIX Python Programming",
+    image: "pythoncer.jpg",
+  },
+  {
+    id: 2,
+    title: "Fullstack with HTML, CSS, Node.js, Express, EJS, MySQL",
+    image: "udemyfull.jpg",
+  },
+  {
+    id: 3,
+    title: "AI and cyber security",
+    image: "AIandCypher.png",
+  },
+];
+
 function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedCert, setSelectedCert] = useState<
+    (typeof certificates)[0] | null
+  >(null);
   const boxRef = useRef<HTMLDivElement>(null);
 
   //scroll to box when created
@@ -234,9 +254,83 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
 
       case "certificate":
         return (
-          <div>
-            <p>Helloo</p>
-          </div>
+          <>
+            {/* --- GRID VIEW --- */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
+              {certificates.map((cert) => (
+                <div
+                  key={cert.id}
+                  className="p-2 md:p-4 group bg-[#161b22] border border-gray-700 rounded-lg overflow-hidden hover:border-green-500/50 hover:shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all duration-300 flex flex-col"
+                >
+                  {/* ส่วนรูปภาพ (Thumbnail) */}
+                  <div
+                    className="relative h-48 overflow-hidden cursor-pointer bg-gray-900"
+                    onClick={() => setSelectedCert(cert)} // คลิกเพื่อขยาย
+                  >
+                    {/* รูปภาพ */}
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+
+                    {/* Overlay ไอคอนขยายตอน Hover */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="bg-black/70 p-2 rounded-full text-green-400">
+                        <FiMaximize2 size={24} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ส่วนรายละเอียดด้านล่าง */}
+                  <div className="p-4 flex flex-col flex-1">
+                    <div className="mb-auto">
+                      <h3 className="text-white font-bold text-lg leading-tight mb-1 group-hover:text-green-400 transition-colors">
+                        {cert.title}
+                      </h3>
+                      {/* <p className="text-green-600 text-sm font-medium mb-2">{cert.issuer}</p> */}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* --- IMAGE MODAL (LIGHTBOX) --- */}
+            {selectedCert && (
+              <div
+                className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+                onClick={() => setSelectedCert(null)} // คลิกพื้นหลังเพื่อปิด
+              >
+                {/* ปุ่มปิด */}
+                <button
+                  className="absolute top-4 right-4 p-2 bg-gray-800 rounded-full text-white hover:bg-red-500 transition-colors z-10"
+                  onClick={() => setSelectedCert(null)}
+                >
+                  <FiX size={24} />
+                </button>
+
+                {/* กล่องแสดงภาพใหญ่ */}
+                <div
+                  className="relative max-w-5xl max-h-[90vh] flex flex-col items-center"
+                  onClick={(e) => e.stopPropagation()} // คลิกที่รูปไม่ปิด
+                >
+                  <img
+                    src={selectedCert.image}
+                    alt={selectedCert.title}
+                    className="max-w-full max-h-[85vh] rounded-lg shadow-2xl border border-gray-700"
+                  />
+
+                  {/* Caption ใต้ภาพ */}
+                  <div className="mt-4 text-center">
+                    <h2 className="text-xl font-bold text-white">
+                      {selectedCert.title}
+                    </h2>
+                    {/* <p className="text-green-500">{selectedCert.issuer}</p> */}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         );
 
       case "skills":
@@ -434,7 +528,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
           </div>
         );
 
-      case "project":
+      case "projects":
         return (
           <div className="min-h-[500px] p-2 relative">
             {/* not select project */}

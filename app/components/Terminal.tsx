@@ -86,7 +86,7 @@ export default function Terminal({ onExecuteCommand }: TerminalProps) {
 
         {/* History */}
         {history.map((line) => (
-          <div key={line.id} className="text-gray-300 break-words">
+          <div key={line.id} className="text-gray-300 wrap-break-word">
             {line.isUser ? (
               <span className="text-green-400">{line.text}</span>
             ) : (
