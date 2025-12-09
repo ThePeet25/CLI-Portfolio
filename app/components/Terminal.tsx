@@ -1,5 +1,6 @@
 "use client";
 
+import { on } from "events";
 import { useState, useEffect, useRef } from "react";
 import { text } from "stream/consumers";
 
@@ -8,11 +9,13 @@ type TerminalProps = {
   onExecuteCommand: (cmd: string) => void;
 };
 
+type CommandHandle = (args: { setHistory: any; onExecuteCommand: any }) => void;
+
 const help_text = `Available Commands:
 -------------------
 /introduce   : Show profile
 /skills      : View technical skills
-/projects    : show my projects
+/projects    : Show my projects
 /contact     : Get contact info
 /certificate : View certificates
 /github      : Open GitHub profile
@@ -20,6 +23,29 @@ const help_text = `Available Commands:
 /help        : Show this help message
 cls, clear   : Clear terminal history
 `;
+
+const Command_registry: Record<string, CommandHandle> = {
+  "/help": ({ setHistory }) => {
+    setHistory((prev: any) => [
+      ...prev,
+      { id: Date.now() + 1, text: help_text, isUser: false },
+    ]);
+  },
+
+  clear: ({ setHistory }) => setHistory([]),
+  cls: ({ setHistory }) => setHistory([]),
+
+  // external links
+  "/github": () => window.open("https://github.com/ThePeet25", "_blank"),
+  "/resume": () => window.open("/resume.pdf", "_blank"),
+
+  //GUI
+  "/introduce": ({ onExecuteCommand }) => onExecuteCommand("/introduce"),
+  "/projects": ({ onExecuteCommand }) => onExecuteCommand("/projects"),
+  "/contact": ({ onExecuteCommand }) => onExecuteCommand("/contact"),
+  "/certificate": ({ onExecuteCommand }) => onExecuteCommand("/certificate"),
+  "/skills": ({ onExecuteCommand }) => onExecuteCommand("/skills"),
+};
 
 export default function Terminal({ onExecuteCommand }: TerminalProps) {
   // รับ props เข้ามา
@@ -38,30 +64,26 @@ export default function Terminal({ onExecuteCommand }: TerminalProps) {
 
       const command = input.trim();
 
+      //1. collect user history
       const userLine = {
         id: Date.now(),
         text: `> ${command}`,
         isUser: true,
       };
+      setHistory((prev) => [...prev, userLine]);
 
-      if (command === "/help") {
-        const responseLine = {
+      //2. handle command
+      const action = Command_registry[command];
+
+      if (action) {
+        action({ setHistory, onExecuteCommand });
+      } else {
+        const errorLine = {
           id: Date.now() + 1,
-          text: help_text,
+          text: `Command not found: ${command}. Type /help for available commands.`,
           isUser: false,
         };
-
-        setHistory((prev) => [...prev, userLine, responseLine]);
-      } else if (command === "cls" || command === "clear") {
-        setHistory([]);
-      } else {
-        setHistory((prev) => [
-          ...prev,
-          { id: Date.now(), text: `user> ${command}` },
-        ]);
-
-        //ส่งคำสั่งไปให้ Parent (Page) จัดการต่อ
-        onExecuteCommand(command);
+        setHistory((prev) => [...prev, errorLine]);
       }
 
       setInput("");

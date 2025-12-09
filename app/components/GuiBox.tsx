@@ -391,15 +391,15 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
           //     </div>
           //   </div>
           // </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-1 md:p-0">
             {skillCategories.map((category, index) => (
               <div
                 key={index}
-                className="w-full border border-gray-600 p-4 rounded-lg bg-[#161b22] hover:border-gray-400 transition-colors"
+                className="w-full border border-gray-600  p-2 md:p-4 rounded-lg bg-[#161b22] hover:border-gray-400 transition-colors"
               >
                 {/* header */}
                 <div className="border border-gray-500 rounded-lg bg-gray-600/30 p-2">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-200">
+                  <h2 className="text-sm md:text-2xl font-bold text-gray-200">
                     {category.title}
                   </h2>
                 </div>
@@ -412,13 +412,13 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                       className="group flex flex-col items-center justify-center gap-2 p-3 min-w-20"
                     >
                       <skill.icon
-                        size={30}
                         className={`${skill.color} 
                         drop-shadow-md transition-transform duration-300 
                         group-hover:scale-125
                         group-hover:border-current
                         group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]
                         bg-transparent group:hover:bg-white
+                        text-[30px] md:text-[40px]
                         `}
                       />
 
@@ -583,14 +583,14 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
             {selectedProject && (
               <div className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto">
                 {/* header */}
-                <div className="flex itmes-center gap-4 border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#0d1117]/95 backdrop-blur z-10 p-2">
+                <div className="flex items-center gap-4 border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#0d1117]/95 backdrop-blur z-10 p-2">
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="flex items-center gap-2px-2 py-1.5 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors text-sm font-bold"
+                    className="flex items-center gap-2 px-2 py-1.5 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors text-xs md:text-sm font-bold"
                   >
                     <FiArrowLeft /> Back
                   </button>
-                  <h2 className="text-xl font-bold text-green-500 tracking-wide">
+                  <h2 className="text-base md:text-xl font-bold text-green-500 tracking-wide">
                     {selectedProject.title}{" "}
                   </h2>
                 </div>
@@ -601,14 +601,16 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                   <div className="lg:col-span-2 space-y-6">
                     <div>
                       {/* summary */}
-                      <h4 className="font-bold text-green-400 mb-2">Summary</h4>
-                      <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+                      <h4 className="text-xs md:text-base font-bold text-green-400 mb-2">
+                        Summary
+                      </h4>
+                      <p className="text-gray-400 leading-relaxed text-xs md:text-base">
                         {selectedProject.describeFull}
                       </p>
                     </div>
 
                     {/* responsibilties */}
-                    <h4 className="text-green-400 font-bold mb-3 flex items-center gap-2">
+                    <h4 className="text-green-400 font-bold mb-3 flex items-center gap-2 text-xs md:text-base">
                       Responsibilities
                     </h4>
                     <ul className="space-y-3">
@@ -616,7 +618,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                         (item: string, idx: number) => (
                           <li
                             key={idx}
-                            className="flex items-start gap-3 text-sm text-gray-300"
+                            className="flex items-start gap-3 text-xs md:text-base text-gray-300"
                           >
                             <FiCheckCircle className="text-green-500 mt-1 shrink-0" />
                             <span>{item}</span>
@@ -635,7 +637,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                           <p className="text-xs text-gray-500 font-bold uppercase mb-1">
                             Role
                           </p>
-                          <p className="text-white font-mono text-sm">
+                          <p className="text-white font-mono text-xs md:text-base">
                             {selectedProject.role}
                           </p>
                         </div>
@@ -643,7 +645,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                           <p className="text-xs text-gray-500 font-bold uppercase mb-1">
                             Timeline
                           </p>
-                          <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <div className="flex items-center gap-2 text-gray-300 text-xs md:text-base">
                             <FiCalendar /> {selectedProject.date}
                           </div>
                         </div>
