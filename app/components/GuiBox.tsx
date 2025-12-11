@@ -39,7 +39,8 @@ import {
 } from "react-icons/fi";
 
 import { FaPhone, FaLine } from "react-icons/fa6";
-import { MdEmail, MdMail } from "react-icons/md";
+import { MdEmail,} from "react-icons/md";
+import { RiTailwindCssFill } from "react-icons/ri";
 
 type GuiBoxProps = {
   id: number;
@@ -63,6 +64,7 @@ const skillCategories = [
       { name: "Next.js", icon: SiNextdotjs, color: "text-white" },
       { name: "HTML", icon: SiHtml5, color: "text-[#E34F26]" },
       { name: "CSS", icon: SiCss3, color: "text-[#1572B6]" },
+      { name: "Tailwind CSS", icon: RiTailwindCssFill, color: "text-[#38B2AC]" },
     ],
   },
   {
@@ -100,7 +102,7 @@ const skillCategories = [
 const projects = [
   {
     title: "POS System Backend",
-    subtitles: `Group project | July 2025 - October 2025 `,
+    type: `Group project`,
     date: "July 2025 - October 2025",
     role: "Backend Developer",
     github: "https://github.com/ThePeet25/POS-server",
@@ -126,7 +128,7 @@ const projects = [
   },
   {
     title: "Search & Review Restaurant",
-    subtitles: `Group project | July 2025 - October 2025 `,
+    type: `Group project`,
     date: "July 2025 - October 2025",
     role: "Backend Developer",
     github: "https://github.com/KMITL-PCC/TasteTrail",
@@ -154,9 +156,9 @@ const projects = [
     ],
   },
   {
-    title: "Log process",
-    subtitles: `personal project | February 2025 - March 2025 `,
-    date: "February 2025 - Mar 2025",
+    title: "Log Process",
+    type: `Personal project`,
+    date: "February 2025 - March 2025",
     role: "Backend Developer",
     github: "https://github.com/ThePeet25/log-process",
     describe:
@@ -183,14 +185,15 @@ const projects = [
   },
   {
     title: "CLI Portfolio",
-    subtitles: `personal project | December 2025`,
+    type: `Personal project`,
     date: "December 2025",
     role: "Frontend developer",
     github: "https://github.com/ThePeet25/log-process",
+    live:"https://cli-portfolio-kappa.vercel.app/",
     describe:
-      "This is my CLI with GUI portfolio. It is built with next.js and tailwindcss. The project showcases my skills and experience in a frontend developer.",
+      "This is my CLI with GUI portfolio. It is built with Next.js and Tailwindcss. The project showcases my skills and experience as a frontend developer.",
     describeFull:
-      "This is my CLI with GUI portfolio. It's built with next.js and tailwindcss. The project showcases my skills and experience in a frontend developer.",
+      "This is my CLI with GUI portfolio. It's built with Next.js and Tailwindcss. The project showcases my skills and experience as a frontend developer.",
     techStack: ["Javascript", "HTML", "Tailwind CSS", "React"],
     responsibilities: [
       `Implemented a hybrid portfolio with both a polished GUI (Next.js + React) 
@@ -231,6 +234,13 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
       boxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
+
+  //scroll to project when selected
+  useEffect(() => {
+    if (selectedProject && boxRef.current) {
+      boxRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [selectedProject]);
 
   //content based on type
   const renderContent = () => {
@@ -405,7 +415,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                 </div>
 
                 {/* icon */}
-                <div className="flex gap-4 flex-wrap mt-4 px-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4 px-2">
                   {category.skills.map((skill, idx) => (
                     <div
                       key={idx}
@@ -417,7 +427,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                         group-hover:scale-125
                         group-hover:border-current
                         group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]
-                        bg-transparent group:hover:bg-white
+                        bg-transparent
                         text-[30px] md:text-[40px]
                         `}
                       />
@@ -435,47 +445,11 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
 
       case "contact":
         return (
-          // <div className="gird grid-cols-2 md:grid-cols-4 w-full text-gray-400">
-          //   {/* <div className="group border border-transparent hover:border-white hover:bg-white/10 p-2 hover:text-green-400 rounded-xl flex flex-col items-center gap-2 transition-all duration-300">
-          //     <FaPhone size={30} className="group-hover:text-blue-500" />
-          //     <p>+66 99 132 7031</p>
-          //   </div> */}
-          //   <a
-          //     href=""
-          //     className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl
-          //   flex flex-col items-center gap-3 transition-all duration-300"
-          //   >
-          //     <FaPhone
-          //       size={30}
-          //       className="group-hover:text-green-400 group-hover:scale-110 transition-transform duration-300"
-          //     />
-          //     <p className="font-mono text-sm group-hover:text-white transition-colors">
-          //       +66 99 132 7031
-          //     </p>
-          //   </a>
-          //   <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
-          //     <FaLine
-          //       size={30}
-          //       className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
-          //     />
-          //     <p className="font-mono text-sm group-hover:text-white transition-colors">
-          //       0991327031
-          //     </p>
-          //   </div>
-          //   <div>
-          //     <SiGithub />
-          //     <p>github</p>
-          //   </div>
-          //   <div>
-          //     <MdMail />
-          //     <p>email</p>
-          //   </div>
-          // </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full text-gray-400 place-items-center h-full">
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-4 gap-4 w-full text-gray-400 place-items-center h-full">
             {/* 1. Phone (แถม: กดโทรได้เลย) */}
             <a
               href="tel:+66991327031"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
             >
               <FaPhone
                 size={30}
@@ -487,7 +461,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
             </a>
 
             {/* 2. Line */}
-            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24">
+            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
               <FaLine
                 size={30}
                 className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
@@ -501,7 +475,7 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
               href="https://github.com/ThePeet25"
               target="_blank"
               rel="noopener noreferrer"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer w-[235px] h-24"
+              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
             >
               <SiGithub
                 size={30}
@@ -540,19 +514,41 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                     className="flex flex-col justify-between bg-[#161b22] p-2 md:p-6 border border-gray-800 rounded-lg text-gray-400 md:min-h-[400px]"
                   >
                     {/* header */}
-                    <div className="flex flex-col justify-between items-start mb-4 gap-2">
+                    <div
+                    onClick={() => setSelectedProject(project)} 
+                    className="flex flex-col justify-between items-start mb-4 gap-2 hover:cursor-pointer">
                       <h2 className="text-sm md:text-xl text-white bg-green-400 p-2 rounded-lg">
                         {project.title}
                       </h2>
-                      <p className="text-xs">{project.subtitles} </p>
+                      <div className="flex flex-col md:flex-row md:items-cetner gap-1 md:gap-3 text-xs mt-2">
+                        <p className="text-xs ">{project.type} </p>
+                        <span className="hidden md:block text-gray-400">|</span>
+                        <div className="flex items-center gap-2">
+                          <FiCalendar size={14} className="inline mr-1 md:hidden" />
+                          <span>{project.date}</span>
+                        </div>
+                      </div>
                     </div>
 
                     {/* describe */}
                     <div
                       onClick={() => setSelectedProject(project)}
-                      className="text-xs md:text-base border border-transparent hover:border-white cursor-pointer"
+                      className="group relative flex flex-col text-xs md:text-base border border-transparent cursor-pointer h-full"
                     >
                       <p>{project.describe}</p>
+
+                      {/* hover */}
+                      <div className="absolute inset-0 bg-[#161b22] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-black border bg-green-400 p-2 rounded-xl font-bold flex items-center gap-2">
+                          More Information
+                        </span>
+                      </div>
+
+                      {/* mobile & ipad*/}
+                      <div className="lg:hidden text-black font-bold text-xs p-2 mt-auto border border-gray-400 bg-gray-400 rounded-xl">
+                        More Information...
+                      </div>
+
                     </div>
 
                     {/* footer */}
@@ -566,6 +562,16 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                         <SiGithub size={24} className="text-white" />
                         <span>Github</span>
                       </a>
+                      {project.live && (
+                        <a href={project.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="ml-auto group flex gap-2 hover:text-red-500 transition-colors text-sm items-center"
+                          >
+                            <FiExternalLink size={24} className="group-hover:text-red-500"/>
+                            Live
+                        </a>
+                      )}
                     </div>
 
                     {/* {selectedProject && (
@@ -581,7 +587,9 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
 
             {/* select project */}
             {selectedProject && (
-              <div className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto">
+              <div 
+              ref={boxRef}
+              className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto">
                 {/* header */}
                 <div className="flex items-center gap-4 border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#0d1117]/95 backdrop-blur z-10 p-2">
                   <button
