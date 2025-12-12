@@ -39,7 +39,7 @@ import {
 } from "react-icons/fi";
 
 import { FaPhone, FaLine } from "react-icons/fa6";
-import { MdEmail,} from "react-icons/md";
+import { MdEmail } from "react-icons/md";
 import { RiTailwindCssFill } from "react-icons/ri";
 
 type GuiBoxProps = {
@@ -64,7 +64,11 @@ const skillCategories = [
       { name: "Next.js", icon: SiNextdotjs, color: "text-white" },
       { name: "HTML", icon: SiHtml5, color: "text-[#E34F26]" },
       { name: "CSS", icon: SiCss3, color: "text-[#1572B6]" },
-      { name: "Tailwind CSS", icon: RiTailwindCssFill, color: "text-[#38B2AC]" },
+      {
+        name: "Tailwind CSS",
+        icon: RiTailwindCssFill,
+        color: "text-[#38B2AC]",
+      },
     ],
   },
   {
@@ -188,8 +192,8 @@ const projects = [
     type: `Personal project`,
     date: "December 2025",
     role: "Frontend developer",
-    github: "https://github.com/ThePeet25/log-process",
-    live:"https://cli-portfolio-kappa.vercel.app/",
+    github: "https://github.com/ThePeet25/CLI-Portfolio",
+    live: "https://cli-portfolio-kappa.vercel.app/",
     describe:
       "This is my CLI with GUI portfolio. It is built with Next.js and Tailwindcss. The project showcases my skills and experience as a frontend developer.",
     describeFull:
@@ -217,6 +221,33 @@ const certificates = [
     id: 3,
     title: "AI and cyber security",
     image: "AIandCypher.png",
+  },
+];
+
+const contacts = [
+  {
+    icon: FaPhone,
+    color: "green-400",
+    contact: "+66 99-132-7031",
+    link: "tel:+66991327031",
+  },
+  {
+    icon: FaLine,
+    color: "[#06C755]",
+    contact: "0991327031",
+    link: "https://line.me/ti/p/HhL57h8SmR",
+  },
+  {
+    icon: SiGithub,
+    color: "white",
+    contact: "ThePeet25",
+    link: "https://github.com/ThePeet25",
+  },
+  {
+    icon: MdEmail,
+    color: "red-400",
+    contact: "b.pattaradanai22@gmail.com",
+    link: "mailto:b.pattaradanai22@gmail.com",
   },
 ];
 
@@ -249,15 +280,19 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
         return (
           <div className="space-y-4 text-gray-300">
             <h2 className="text-2xl font-bold text-white">
-              Hello, I'm student 3rd year at{" "}
+              Hello, I am a third-year student at
+              <span className="text-green-400 font-mono mx-1"> KMITL PCC </span>
+              studying computer engineering
             </h2>
             <p>
-              I am a Computer Engineering student passionate about
+              I have a strong interest in
               <span className="text-green-400 font-mono mx-1">
-                Backend Systems
+                Backend and Full-stack web
               </span>
-              and{" "}
-              <span className="text-green-400 font-mono mx-1">CLI Tools</span>.
+              development. I have hands-on experience developing real-world
+              systems, such POS apps and restaurant search/review platforms, and
+              I'm excited to advance my abilities and join a team where I can
+              have a significant influence.
             </p>
           </div>
         );
@@ -446,59 +481,25 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
       case "contact":
         return (
           <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-4 gap-4 w-full text-gray-400 place-items-center h-full">
-            {/* 1. Phone (แถม: กดโทรได้เลย) */}
-            <a
-              href="tel:+66991327031"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
-            >
-              <FaPhone
-                size={30}
-                className="group-hover:text-green-400 group-hover:scale-110 transition-transform duration-300"
-              />
-              <p className="font-mono text-sm group-hover:text-white transition-colors">
-                +66 99-132-7031
-              </p>
-            </a>
-
-            {/* 2. Line */}
-            <div className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer">
-              <FaLine
-                size={30}
-                className="group-hover:text-[#06C755] group-hover:scale-110 transition-transform duration-300"
-              />
-              <p className="font-mono text-sm group-hover:text-white transition-colors">
-                0991327031
-              </p>
-            </div>
-
-            <a
-              href="https://github.com/ThePeet25"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
-            >
-              <SiGithub
-                size={30}
-                className="group-hover:text-white group-hover:scale-110 transition-transform duration-300"
-              />
-              <p className="font-mono text-sm group-hover:text-white transition-colors">
-                ThePeet25
-              </p>
-            </a>
-
-            {/* 4. Email */}
-            <a
-              href="mailto:b.pattaradanai22@gmail.com"
-              className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
-            >
-              <MdEmail
-                size={30}
-                className="group-hover:text-red-400 group-hover:scale-110 transition-transform duration-300"
-              />
-              <p className="font-mono text-sm group-hover:text-white transition-colors">
-                b.pattaradanai22@gmail.com
-              </p>
-            </a>
+            {/* icon */}
+            {contacts.map((contact, index) => (
+              <a
+                href={`${contact.link}`}
+                key={index}
+                target="_blank"
+                className="group border border-transparent hover:border-white hover:bg-white/10 p-4 rounded-xl flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer"
+              >
+                {
+                  <contact.icon
+                    size={30}
+                    className={`text-${contact.color} md:text-gray-400 group-hover:text-${contact.color} group-hover:scale-110 transition-transform duration-300`}
+                  />
+                }
+                <p className="font-mono text-sm group-hover:text-white transition-colors">
+                  {contact.contact}
+                </p>
+              </a>
+            ))}
           </div>
         );
 
@@ -515,8 +516,9 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                   >
                     {/* header */}
                     <div
-                    onClick={() => setSelectedProject(project)} 
-                    className="flex flex-col justify-between items-start mb-4 gap-2 hover:cursor-pointer">
+                      onClick={() => setSelectedProject(project)}
+                      className="flex flex-col justify-between items-start mb-4 gap-2 hover:cursor-pointer"
+                    >
                       <h2 className="text-sm md:text-xl text-white bg-green-400 p-2 rounded-lg">
                         {project.title}
                       </h2>
@@ -524,7 +526,10 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                         <p className="text-xs ">{project.type} </p>
                         <span className="hidden md:block text-gray-400">|</span>
                         <div className="flex items-center gap-2">
-                          <FiCalendar size={14} className="inline mr-1 md:hidden" />
+                          <FiCalendar
+                            size={14}
+                            className="inline mr-1 md:hidden"
+                          />
                           <span>{project.date}</span>
                         </div>
                       </div>
@@ -548,7 +553,6 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                       <div className="lg:hidden text-black font-bold text-xs p-2 mt-auto border border-gray-400 bg-gray-400 rounded-xl">
                         More Information...
                       </div>
-
                     </div>
 
                     {/* footer */}
@@ -563,13 +567,17 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                         <span>Github</span>
                       </a>
                       {project.live && (
-                        <a href={project.live}
+                        <a
+                          href={project.live}
                           target="_blank"
                           rel="noreferrer"
                           className="ml-auto group flex gap-2 hover:text-red-500 transition-colors text-sm items-center"
-                          >
-                            <FiExternalLink size={24} className="group-hover:text-red-500"/>
-                            Live
+                        >
+                          <FiExternalLink
+                            size={24}
+                            className="group-hover:text-red-500"
+                          />
+                          Live
                         </a>
                       )}
                     </div>
@@ -587,9 +595,10 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
 
             {/* select project */}
             {selectedProject && (
-              <div 
-              ref={boxRef}
-              className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto">
+              <div
+                ref={boxRef}
+                className="text-xs md:text-base h-full bg-[#161b22] rounded-lg animate-in slide-in-from-right duration-300 fade-in overflow-auto"
+              >
                 {/* header */}
                 <div className="flex items-center gap-4 border-b border-gray-800 pb-4 mb-6 sticky top-0 bg-[#0d1117]/95 backdrop-blur z-10 p-2">
                   <button
@@ -666,7 +675,10 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
                               (t: string, i: number) => (
                                 <span
                                   key={i}
-                                  className="px-2 py-1 bg-gray-800 text-green-400 text-xs rounded border border-gray-600"
+                                  className="px-2 py-1 bg-gray-800 text-green-400 text-xs rounded border border-gray-600 cursor-pointer
+                                hover:bg-green-950 
+                                hover:border-green-700 
+                                hover:text-green-200"
                                 >
                                   {t}
                                 </span>
@@ -702,9 +714,6 @@ function GuiBox({ id, title, type, onDelete }: GuiBoxProps) {
             )}
           </div>
         );
-
-      default:
-        return <p>No content</p>;
     }
   };
   return (

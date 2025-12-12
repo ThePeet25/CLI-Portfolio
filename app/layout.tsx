@@ -5,7 +5,7 @@ import "./globals.css";
 const mono = JetBrains_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My CLI Portfolio",
+  title: "CLI Portfolio",
   description: "Interactive Terminal Portfolio",
 };
 
